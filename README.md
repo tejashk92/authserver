@@ -1,2 +1,2 @@
 # authserver
-Spring Boot Oauth2 Authorization Server.
+Spring Boot Oauth2 Authorization Server
