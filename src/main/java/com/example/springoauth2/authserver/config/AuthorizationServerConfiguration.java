@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -40,17 +39,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private  UserDetailsService userDetailsService;   
 
     @Bean
-    public TokenStore tokenStore() {
+     TokenStore tokenStore() {
            return new JwtTokenStore(jwtAccessTokenConverter());
     }
     
     @Bean
-    public PasswordEncoder passwordEncoder() {
-      return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-    @Bean
-    public DefaultTokenServices tokenServices(final TokenStore tokenStore,
+    DefaultTokenServices tokenServices(final TokenStore tokenStore,
                                               final ClientDetailsService clientDetailsService) {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setSupportRefreshToken(true);
@@ -61,7 +55,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+    JwtAccessTokenConverter jwtAccessTokenConverter() {
         SecurityProperties.JwtProperties jwtProperties = securityProperties.getJwt();
         KeyPair keyPair = keyPair(jwtProperties, keyStoreKeyFactory(jwtProperties));
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();

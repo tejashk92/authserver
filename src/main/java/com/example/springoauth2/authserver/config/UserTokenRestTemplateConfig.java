@@ -18,7 +18,7 @@ public class UserTokenRestTemplateConfig {
 	
 	
 	@Bean @Scope (value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode. TARGET_CLASS) 
-	public OAuth2RestTemplate oAuth2RestTemplate() {
+	OAuth2RestTemplate oAuth2RestTemplate() {
 		Authentication auth=SecurityContextHolder.getContext().getAuthentication();
 		System.out.println("Building Oauth2 Restemplate for +auth. getName ()") ; 
 		ResourceOwnerPasswordResourceDetails resource=new ResourceOwnerPasswordResourceDetails();
@@ -31,4 +31,5 @@ public class UserTokenRestTemplateConfig {
 		AccessTokenRequest atr = new DefaultAccessTokenRequest (); 
 		return new OAuth2RestTemplate (resource, new DefaultOAuth2ClientContext(atr));
 	}
+	
 }
